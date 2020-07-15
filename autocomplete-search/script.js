@@ -1,15 +1,18 @@
 const BASE = "server.com";
 const searchInput = document.getElementsByClassName("search__bar__input")[0];
 
-const onSuggestionesponse = data => {
+const onSuggestionResponse = data => {
   const suggestionElement = document.getElementsByClassName(
     "search__suggestions__list"
-  );
-  suggestionElement.innerHTML += data + "<br>";
+  )[0];
+  let suggestions = "";
+  for (const suggestion of data)
+    suggestions += `${suggestion.suggestion}-${suggestion.auxiliary}<br>`;
+  suggestionElement.innerHTML += suggestions;
 };
 
 const onNewInput = e => {
-  api.get(`${BASE}/autocomplete`, searchInput.value, onSuggestionesponse);
+  api.get(`${BASE}/autocomplete`, searchInput.value, onSuggestionResponse);
 };
 searchInput.addEventListener("input", onNewInput);
 
