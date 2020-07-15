@@ -1,7 +1,10 @@
 const BASE = "server.com";
 
 const searchInput = document.getElementsByClassName("search__bar__input")[0];
-
+const suggestions = document.getElementsByClassName(
+  "search__suggestions__list"
+)[0];
+const actionsElement = document.getElementsByClassName("search__actions")[0];
 const boldenChars = ({ inputValue, suggestion }) => {
   if (suggestion.startsWith(inputValue))
     return `${suggestion.substring(
@@ -19,9 +22,6 @@ const createSuggestion = ({ suggestion, auxiliaryData }) => {
   return `<li class="search__suggestion__list__result">${boldedSuggestion}${auxiliaryString}</li>`;
 };
 const onSuggestionsResponse = data => {
-  const suggestions = document.getElementsByClassName(
-    "search__suggestions__list"
-  )[0];
   let suggestionHTML = "";
   for (const suggestion of data) {
     suggestionHTML += createSuggestion({
@@ -30,9 +30,17 @@ const onSuggestionsResponse = data => {
     });
   }
   suggestions.innerHTML = suggestionHTML;
+  if (suggestionHTML)
+    actionsElement.classList.add("search__actions--autosuggest");
+  else actionsElement.classList.remove("search__actions--autosuggest");
 };
 const onNewInput = e => {
-  api.get(`${BASE}/autocomplete`, searchInput.value, onSuggestionsResponse);
+  if (searchInput.value)
+    api.get(`${BASE}/autocomplete`, searchInput.value, onSuggestionsResponse);
+  else {
+    suggestions.innerHTML = "";
+    actionsElement.classList.remove("search__actions--autosuggest");
+  }
 };
 searchInput.addEventListener("input", onNewInput);
 
