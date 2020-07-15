@@ -1,18 +1,26 @@
 const BASE = "server.com";
+
 const searchInput = document.getElementsByClassName("search__bar__input")[0];
 
-const onSuggestionResponse = data => {
-  const suggestionElement = document.getElementsByClassName(
+const createSuggestion = ({ suggestion, auxiliaryData }) => {
+  const auxiliaryString = auxiliaryData ? ` - ${auxiliaryData}` : "";
+  return `<li class="search__suggestion__list__result">${suggestion}${auxiliaryString}</li>`;
+};
+const onSuggestionsResponse = data => {
+  const suggestions = document.getElementsByClassName(
     "search__suggestions__list"
   )[0];
-  let suggestions = "";
-  for (const suggestion of data)
-    suggestions += `${suggestion.suggestion}-${suggestion.auxiliary}<br>`;
-  suggestionElement.innerHTML += suggestions;
+  let suggestionHTML = "";
+  for (const suggestion of data) {
+    suggestionHTML += createSuggestion({
+      suggestion: suggestion.suggestion,
+      auxiliaryData: suggestion.auxiliary
+    });
+  }
+  suggestions.innerHTML = suggestionHTML;
 };
-
 const onNewInput = e => {
-  api.get(`${BASE}/autocomplete`, searchInput.value, onSuggestionResponse);
+  api.get(`${BASE}/autocomplete`, searchInput.value, onSuggestionsResponse);
 };
 searchInput.addEventListener("input", onNewInput);
 
@@ -81,7 +89,6 @@ const endpoints = {
 
 // Mock The API
 const handleGet = (url, data, callback) => {
-  const base = url.substring(0, url.indexOf("/"));
   const endpoint = url.substring(url.indexOf("/"), url.length);
   callback(endpoints[endpoint]["get"](data));
 };
