@@ -30,9 +30,23 @@ const onSuggestionsResponse = data => {
     });
   }
   suggestions.innerHTML = suggestionHTML;
-  if (suggestionHTML)
+  if (suggestionHTML) {
     actionsElement.classList.add("search__actions--autosuggest");
-  else actionsElement.classList.remove("search__actions--autosuggest");
+    document
+      .getElementsByClassName("search")[0]
+      .classList.add("search--autosuggest");
+    document
+      .getElementsByClassName("search__bar")[0]
+      .classList.add("search__bar--autosuggest");
+  } else {
+    actionsElement.classList.remove("search__actions--autosuggest");
+    document
+      .getElementsByClassName("search")[0]
+      .classList.remove("search--autosuggest");
+    document
+      .getElementsByClassName("search__bar")[0]
+      .classList.remove("search__bar--autosuggest");
+  }
 };
 const onNewInput = e => {
   if (searchInput.value)
@@ -40,6 +54,12 @@ const onNewInput = e => {
   else {
     suggestions.innerHTML = "";
     actionsElement.classList.remove("search__actions--autosuggest");
+    document
+      .getElementsByClassName("search")[0]
+      .classList.remove("search--autosuggest");
+    document
+      .getElementsByClassName("search__bar")[0]
+      .classList.remove("search__bar--autosuggest");
   }
 };
 searchInput.addEventListener("input", onNewInput);
