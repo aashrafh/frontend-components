@@ -1,0 +1,23 @@
+.tooltip {
+  width: 10rem;
+  height: 2rem;
+  background: black;
+  text-align: center;
+  position: absolute;
+}
+.tooltip__icon {
+  width: 1.8rem;
+  height: 2rem;
+  fill: white;
+  padding: 0.1rem;
+  text-align: center;
+}
+.tooltip__icon:last-child {
+  border-left: 1px solid white;
+}
+.article {
+  margin: 0 auto;
+  width: 500px;
+  background: yellow;
+  margin-top: 5rem;
+}
