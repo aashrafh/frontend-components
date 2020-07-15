@@ -45,19 +45,22 @@ let endOfSelection = false;
 
 const displayTooltip = () => {
   const selection = document.getSelection();
-  //   const anchorNode = selection.anchorNode;
-  //   const focusNode = selection.focusNode;
-  const rangeRect = selection.getRangeAt(0).getClientRects()[0];
+  const rangeRect = selection.getRangeAt(0).getClientRects();
 
   document.body.append(tooltip);
   document.body.append(tooltipTail);
 
-  const y = rangeRect.y;
-  const x = rangeRect.x + rangeRect.width / 2;
   const tooltipWidth = tooltip.offsetWidth;
   const tooltipHeight = tooltip.offsetHeight;
   const tooltipTialWidth = tooltipTail.offsetWidth;
   const tooltipTialHeight = tooltipTail.offsetHeight;
+
+  const parentElement = selection.anchorNode.parentElement;
+  const y = rangeRect[0].y;
+  const x =
+    rangeRect.length > 1
+      ? parentElement.offsetLeft + parentElement.offsetWidth / 2
+      : rangeRect[0].x + rangeRect[0].width / 2;
 
   tooltip.style.top = `${y - tooltipHeight - tooltipTialHeight / 2}px`;
   tooltip.style.left = `${x - tooltipWidth / 2}px`;
