@@ -32,18 +32,23 @@ tooltip.innerHTML = icons;
 const tooltipTail = document.createElement("div");
 tooltipTail.classList.add("tooltip__tail");
 
-document.addEventListener("mouseup", () => {
+const articleElement = document.querySelector("article");
+
+const removeTooltip = () => {
+  if (document.body.contains(tooltip)) {
+    document.body.removeChild(tooltip);
+    document.body.removeChild(tooltipTail);
+  }
+};
+
+let endOfSelection = false;
+
+const displayTooltip = () => {
   const selection = document.getSelection();
-  const anchorNode = selection.anchorNode;
-  const focusNode = selection.focusNode;
-  if (anchorNode != focusNode) return;
-
-  //   const selectedText = anchorNode.data.substring(
-  //     selection.anchorOffset,
-  //     selection.focusOffset
-  //   );
-
+  //   const anchorNode = selection.anchorNode;
+  //   const focusNode = selection.focusNode;
   const rangeRect = selection.getRangeAt(0).getClientRects()[0];
+
   document.body.append(tooltip);
   document.body.append(tooltipTail);
 
@@ -58,4 +63,23 @@ document.addEventListener("mouseup", () => {
   tooltip.style.left = `${x - tooltipWidth / 2}px`;
   tooltipTail.style.top = `${y - tooltipTialHeight / 2}px`;
   tooltipTail.style.left = `${x - tooltipTialWidth / 2}px`;
+};
+
+document.addEventListener("mouseup", () => {
+  if (endOfSelection) displayTooltip();
+  endOfSelection = false;
+});
+document.addEventListener("selectionchange", e => {
+  const selection = document.getSelection();
+  if (selection.type !== "Range") {
+    removeTooltip();
+    return;
+  }
+
+  if (selection.anchorNode != selection.focusNode) {
+    endOfSelection = false;
+    return;
+  }
+
+  endOfSelection = true;
 });

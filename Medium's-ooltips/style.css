@@ -2,6 +2,7 @@
   --tooltip-color: black;
 }
 .tooltip {
+  user-select: none;
   width: 10rem;
   height: 2rem;
   background: var(--tooltip-color);
