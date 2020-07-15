@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="style.css" rel="stylesheet" />
+    <title>Gmail's Autovalidating Form</title>
+  </head>
+  <body>
+    <form class="signup">
+      <fieldset class="signup__field signup__field--name">
+        <legend class="signup__field__legend">
+          Name
+        </legend>
+        <input
+          type="text"
+          name="fname"
+          class="signup__field__input signup__field__input--fname"
+          placeholder="First Name"
+        />
+        <input
+          type="text"
+          name="lname"
+          class="signup__field__input signup__field__input--lname"
+          placeholder="Last Name"
+        />
+      </fieldset>
+      <fieldset class="signup__field signup__field--username">
+        <legend class="signup__field__legend">
+          Choose your username
+        </legend>
+        <input
+          type="text"
+          name="username"
+          class="signup__field__input signup__field__input--username"
+          placeholder="username"
+        />
+      </fieldset>
+      <fieldset class="signup__field signup__field--password">
+        <legend class="signup__field__legend">
+          Create a password
+        </legend>
+        <input
+          type="password"
+          name="password"
+          class="signup__field__input signup__field__input--password"
+          placeholder="password"
+        />
+      </fieldset>
+      <fieldset class="signup__field signup__field--confirm-password">
+        <legend class="signup__field__legend">
+          Confirm your password
+        </legend>
+        <input
+          type="password"
+          name="confirm-password"
+          class="signup__field__input signup__field__input--confirm-password"
+          placeholder="rewrite your password"
+        />
+      </fieldset>
+      <fieldset class="signup__field signup__field--birthday">
+        <legend class="signup__field__legend">
+          Birthday
+          <div class="signup__field__selection">Month</div>
+        </legend>
+        <input
+          type="hidden"
+          name="month"
+          class="signup__field__input signup__field__input--birth-month"
+          placeholder="Month"
+        />
+        <input
+          type="text"
+          name="day"
+          class="signup__field__input signup__field__input--birth-day"
+          placeholder="Day"
+        />
+        <input
+          type="text"
+          name="year"
+          class="signup__field__input signup__field__input--birth-year"
+          placeholder="Year"
+        />
+      </fieldset>
+      <fieldset class="signup__field signup__field--phone">
+        <legend class="signup__field__legend">
+          Mobile phone
+        </legend>
+        <input
+          type="text"
+          name="phone"
+          class="signup__field__input signup__field__input--phone"
+          placeholder="Phone number"
+        />
+      </fieldset>
+      <fieldset class="signup__field signup__field--current-mail">
+        <legend class="signup__field__legend">
+          Your current email address
+        </legend>
+        <input
+          type="text"
+          name="current-mail"
+          class="signup__field__input signup__field__input--current-mail"
+          placeholder="Current Mail"
+        />
+      </fieldset>
+    </form>
+    <script src="index.js"></script>
+  </body>
+</html>
