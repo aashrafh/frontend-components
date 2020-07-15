@@ -2,9 +2,21 @@ const BASE = "server.com";
 
 const searchInput = document.getElementsByClassName("search__bar__input")[0];
 
+const boldenChars = ({ inputValue, suggestion }) => {
+  if (suggestion.startsWith(inputValue))
+    return `${suggestion.substring(
+      0,
+      inputValue.length
+    )}<b>${suggestion.substring(inputValue.length, suggestion.length)}</b>`;
+  return `<b>${suggestion}</b>`;
+};
 const createSuggestion = ({ suggestion, auxiliaryData }) => {
   const auxiliaryString = auxiliaryData ? ` - ${auxiliaryData}` : "";
-  return `<li class="search__suggestion__list__result">${suggestion}${auxiliaryString}</li>`;
+  const boldedSuggestion = boldenChars({
+    inputValue: searchInput.value,
+    suggestion
+  });
+  return `<li class="search__suggestion__list__result">${boldedSuggestion}${auxiliaryString}</li>`;
 };
 const onSuggestionsResponse = data => {
   const suggestions = document.getElementsByClassName(
