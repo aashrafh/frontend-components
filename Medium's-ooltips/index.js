@@ -24,3 +24,38 @@ const icons = `
         ></path>
       </svg>
 `;
+
+const tooltip = document.createElement("div");
+tooltip.classList.add("tooltip");
+tooltip.innerHTML = icons;
+
+const tooltipTail = document.createElement("div");
+tooltipTail.classList.add("tooltip__tail");
+
+document.addEventListener("mouseup", () => {
+  const selection = document.getSelection();
+  const anchorNode = selection.anchorNode;
+  const focusNode = selection.focusNode;
+  if (anchorNode != focusNode) return;
+
+  //   const selectedText = anchorNode.data.substring(
+  //     selection.anchorOffset,
+  //     selection.focusOffset
+  //   );
+
+  const rangeRect = selection.getRangeAt(0).getClientRects()[0];
+  document.body.append(tooltip);
+  document.body.append(tooltipTail);
+
+  const y = rangeRect.y;
+  const x = rangeRect.x + rangeRect.width / 2;
+  const tooltipWidth = tooltip.offsetWidth;
+  const tooltipHeight = tooltip.offsetHeight;
+  const tooltipTialWidth = tooltipTail.offsetWidth;
+  const tooltipTialHeight = tooltipTail.offsetHeight;
+
+  tooltip.style.top = `${y - tooltipHeight - tooltipTialHeight / 2}px`;
+  tooltip.style.left = `${x - tooltipWidth / 2}px`;
+  tooltipTail.style.top = `${y - tooltipTialHeight / 2}px`;
+  tooltipTail.style.left = `${x - tooltipTialWidth / 2}px`;
+});

@@ -1,9 +1,20 @@
+:root {
+  --tooltip-color: black;
+}
 .tooltip {
   width: 10rem;
   height: 2rem;
-  background: black;
+  background: var(--tooltip-color);
   text-align: center;
   position: absolute;
+}
+.tooltip__tail {
+  width: 0;
+  height: 0;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--tooltip-color);
 }
 .tooltip__icon {
   width: 1.8rem;
