@@ -45,6 +45,10 @@ const articleElement = document.querySelector("article");
 
 const removeTooltip = () => {
   if (document.body.contains(tooltip)) {
+    tooltip.style.top = null;
+    tooltip.style.left = null;
+    tooltipTail.style.top = null;
+    tooltipTail.style.left = null;
     document.body.removeChild(tooltip);
     document.body.removeChild(tooltipTail);
   }
@@ -79,6 +83,7 @@ const displayTooltip = () => {
 
 document.addEventListener("mouseup", () => {
   if (endOfSelection) displayTooltip();
+  else removeTooltip();
   endOfSelection = false;
 });
 document.addEventListener("selectionchange", e => {

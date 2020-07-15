@@ -4,7 +4,7 @@
 }
 @keyframes slideup {
   from {
-    opacity: 0;
+    opacity: 0.5;
     transform: translate(0px, 10px);
   }
   90% {
@@ -16,6 +16,7 @@
   }
 }
 .tooltip {
+  transition: linear 0.08s;
   animation: slideup 0.1s;
   user-select: none;
   width: 10rem;
@@ -29,6 +30,7 @@
 }
 .tooltip__tail {
   animation: slideup 0.1s;
+  transition: linear 0.08s;
   width: 0;
   height: 0;
   position: absolute;
