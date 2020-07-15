@@ -2,7 +2,21 @@
   --tooltip-color: #323232;
   --tooltip-divider-color: #666666;
 }
+@keyframes slideup {
+  from {
+    opacity: 0;
+    transform: translate(0px, 10px);
+  }
+  90% {
+    transform: translate(0px, -1px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+}
 .tooltip {
+  animation: slideup 0.1s;
   user-select: none;
   width: 10rem;
   height: 2rem;
@@ -14,6 +28,7 @@
   padding-top: 0.5rem;
 }
 .tooltip__tail {
+  animation: slideup 0.1s;
   width: 0;
   height: 0;
   position: absolute;
@@ -43,6 +58,5 @@
 .article {
   margin: 0 auto;
   width: 500px;
-  background: yellow;
   margin-top: 5rem;
 }
