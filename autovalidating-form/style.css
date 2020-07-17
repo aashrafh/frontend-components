@@ -1,0 +1,54 @@
+:root {
+  --error-red: #db4c3f;
+  --light-grey: #f1f1f1;
+  --border-grey: #b9b9b9;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.container {
+  background: var(--light-grey);
+  padding: 1rem;
+  width: 20rem;
+  margin: 0 auto;
+}
+.signup__field {
+  border: none;
+}
+.signup__field__legend {
+  font-size: 13px;
+  font-weight: bold;
+}
+.signup__field__inputs {
+  display: flex;
+  flex-direction: row;
+}
+.signup__field__inputs__input {
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 2rem;
+  background: white;
+  border: 1px solid grey;
+  padding: 0.2rem;
+  margin-right: 0.5rem;
+}
+.signup__field__inputs__input:hover {
+  border: 1px solid var(--border-grey);
+  box-shadow: 1px 1px 4px #d0d0d0 inset;
+  outline: none;
+}
+.signup__field__inputs__input:focus {
+  border: 1px solid var(--border-grey);
+}
+.signup__field__selection {
+  font-size: 13px;
+  width: 5rem;
+}
+.signup__field__input--error {
+  border: 1px solid var(--error-red);
+}
+.signup__field__error {
+  color: var(--error-red);
+  font-size: 13px;
+  margin-top: 0.5rem;
+}
