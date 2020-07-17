@@ -185,6 +185,32 @@ const updateGuide = inputElement => {
   guide.update(inputElement.value);
 };
 
+const isRestrictedKey = ({ e, maxNum }) => {
+  const specialKeys = ["Enter", "Backspace"];
+  if (specialKeys.includes(e.key)) return false;
+
+  const proposedInput = e.target.value + e.key;
+  if (proposedInput.length > maxNum) return true;
+
+  const regexNumber = /^[0-9]+$/;
+  if (!regexNumber.test(proposedInput)) return true;
+
+  return false;
+};
+const isRestrictedYear = e => isRestrictedKey({ e, maxNum: 4 });
+const isRestrictedDay = e => isRestrictedKey({ e, maxNum: 2 });
+const restrictionMap = {
+  birthYear: isRestrictedYear,
+  birthDay: isRestrictedDay
+};
+const restric = e => {
+  const field = e.target.dataset.field;
+  const restriction = restrictionMap[field];
+  if (!restriction) return;
+  const isRestricted = restriction(e);
+  if (isRestricted) e.preventDefault();
+};
+
 for (const input of inputs) {
   input.addEventListener("blur", e => {
     validate(e.target);
@@ -192,4 +218,5 @@ for (const input of inputs) {
   });
   input.addEventListener("focus", e => showGuide(e.target));
   input.addEventListener("keyup", e => updateGuide(e.target));
+  input.addEventListener("keydown", e => restric(e));
 }
