@@ -15,6 +15,18 @@ const validateUsername = username => {
   if (!regexUsername.test(username))
     throw new ValidationError("Please enter a valid username");
 };
+const validatePassword = password => {
+  if (!password) throw new ValidationError("Password cannot be empty");
+  if (password.length < 6)
+    throw new ValidationError("Password length is too short");
+};
+const validateConfirmPassword = password => {
+  const currentPassword = document.getElementsByClassName(
+    "signup__field__input--password"
+  )[0].value;
+  if (password && password !== currentPassword)
+    throw new ValidationError("Password did not match");
+};
 const validateDay = day => {
   const regexDay = /^[0-9]{1, 2}$/;
   if (!regexDay.test(day))
@@ -62,18 +74,22 @@ const validateEmail = email => {
 const validationMap = {
   name: validateName,
   username: validateUsername,
+  password: validatePassword,
+  confirmPassword: validateConfirmPassword,
   birthDay: validateDay,
   birthYear: validateYear,
   phoneNumber: validatePhoneNumber,
   email: validateEmail
 };
-const validate = e => {
-  const inputElement = e.target;
+const validate = inputElement => {
   const field = inputElement.dataset.field;
   if (field === "password") {
-    return;
+    const confirmPassword = document.getElementsByClassName(
+      "signup__field__input--confirm-password"
+    )[0];
+    validate(confirmPassword);
   }
-  const errorMessageElement = e.target.parentElement.parentElement.getElementsByClassName(
+  const errorMessageElement = inputElement.parentElement.parentElement.getElementsByClassName(
     "signup__field__error"
   )[0];
 
@@ -89,4 +105,91 @@ const validate = e => {
 };
 
 const inputs = document.getElementsByClassName("signup__field__inputs__input");
-for (const input of inputs) input.addEventListener("blur", validate);
+
+class PasswordGuide {
+  constructor({ className, getMessage }) {
+    this.htmlNode = document.getElementsByClassName(className)[0];
+    this.getMessage = getMessage;
+  }
+  hide() {
+    this.htmlNode.style.display = "none";
+  }
+  show() {
+    this.htmlNode.style.display = "block";
+  }
+  update(val) {
+    this.htmlNode.innerHTML = this.getMessage(val);
+  }
+}
+
+const PASSWORD_CATEGORIES = {
+  GOOD: "password_good",
+  FAIR: "password_fair",
+  WEAK: "password_weak"
+};
+
+const mapPasswordToCategory = password => {
+  const hasLetters = /[a-zA-Z]+/;
+  const hasNumbers = /[0-9]+/;
+  const hasOnlyLettersAndNumbers = /^[a-zA-Z0-9]{6,}$/;
+
+  const isGoodPassword = () => {
+    return (
+      hasLetters.test(password) &&
+      hasNumbers.test(password) &&
+      hasOnlyLettersAndNumbers.test(password)
+    );
+  };
+  const isFairPassword = () => hasOnlyLettersAndNumbers.test(password);
+
+  if (isGoodPassword()) return PASSWORD_CATEGORIES.GOOD;
+  if (isFairPassword()) return PASSWORD_CATEGORIES.FAIR;
+  return PASSWORD_CATEGORIES.WEAK;
+};
+
+const passwordGuide = new PasswordGuide({
+  className: "signup__field__guide--password",
+  getMessage: val => {
+    switch (mapPasswordToCategory(val)) {
+      case PASSWORD_CATEGORIES.GOOD:
+        return "This password is awesome!";
+      case PASSWORD_CATEGORIES.FAIR:
+        return "A good password uses a mix of number and letters.";
+      case PASSWORD_CATEGORIES.WEAK:
+        return "Try a longer password";
+    }
+    return "";
+  }
+});
+
+const guideMap = {
+  password: passwordGuide
+};
+
+const showGuide = inputElement => {
+  const field = inputElement.dataset.field;
+  const guide = guideMap[field];
+  if (!guide) return;
+  guide.show();
+};
+const hideGuide = inputElement => {
+  const field = inputElement.dataset.field;
+  const guide = guideMap[field];
+  if (!guide) return;
+  guide.hide();
+};
+const updateGuide = inputElement => {
+  const field = inputElement.dataset.field;
+  const guide = guideMap[field];
+  if (!guide) return;
+  guide.update(inputElement.value);
+};
+
+for (const input of inputs) {
+  input.addEventListener("blur", e => {
+    validate(e.target);
+    hideGuide(e.target);
+  });
+  input.addEventListener("focus", e => showGuide(e.target));
+  input.addEventListener("keyup", e => updateGuide(e.target));
+}
