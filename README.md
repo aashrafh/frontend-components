@@ -1,5 +1,5 @@
 # Frontend Components
-The frontend of some of popular web components using only HTML, CSS, and vanilla JavaScript without any type of external libraries.
+The frontend of some of popular web components using only HTML, CSS(BEM methodology), and vanilla JavaScript without any type of external libraries.
 What you will find in this repo:
 * [eBay's dropdown menu](https://github.com/aashrafh/frontend-components/tree/master/eBay's-dropdown-menu)
 * [Auto-validating form](https://github.com/aashrafh/frontend-components/tree/master/autovalidating-form)
