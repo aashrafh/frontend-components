@@ -73,7 +73,7 @@ const validate = e => {
   if (field === "password") {
     return;
   }
-  const errorMessageElement = e.target.parentElement.getElementsByClassName(
+  const errorMessageElement = e.target.parentElement.parentElement.getElementsByClassName(
     "signup__field__error"
   )[0];
 
@@ -88,5 +88,5 @@ const validate = e => {
   }
 };
 
-const inputs = document.getElementsByClassName("signup__field__input");
+const inputs = document.getElementsByClassName("signup__field__inputs__input");
 for (const input of inputs) input.addEventListener("blur", validate);
